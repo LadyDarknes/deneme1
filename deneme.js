@@ -3,8 +3,13 @@ const client = new Discord.Client();
 const işaret = require('./işaret.json')
 const { Client, MessageEmbed } = require('discord.js')
 const play = require('discordjs-ytdl')
+
+
+ var prefix = işaret.prefix
+
+ module.exports = { 
 module.exports = { 
-kod: "play",
+code: "play",
 async run (client, message, args){
  if (message.member.voice.channel){
    const connection = await message.member.voice.channel.join()
@@ -16,7 +21,7 @@ async run (client, message, args){
 }
 
 module.exports = { 
-kod: "stop",
+code: "stop",
 async run (client, message, args){
  if (!message.member.voice.channel) return message.channel.send('sesli kanalda değilsinizki?')
  if (!message.guild.me.voice.channel) return message.channel.send('ben bir sesli kanalda değilimki')
@@ -25,9 +30,7 @@ async run (client, message, args){
  message.channel.send('başarıyla ayrıldım')
   }
 }
-
- var prefix = işaret.prefix
-
+ 
 client.on('ready', () => {
   console.log(`sunucuya girdim ${client.user.tag}!`);
   client.user.setActivity('yardım için --yardım yaziniz ', { type: 'PLAYING' })
