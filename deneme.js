@@ -2,8 +2,31 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const işaret = require('./işaret.json')
 const { Client, MessageEmbed } = require('discord.js')
+const play = require('discordjs-ytdl')
+module.exports = { 
+kod: "play",
+async run (client, message, args){
+ if (message.member.voice.channel){
+   const connection = await message.member.voice.channel.join()
+   play.play(connection, args.join(" "),'AIzaSyCd-UyaSeM4rSUh5iwxZ6A47eTZ8Vg8Jbk')
+   } else {
+ message.reply('bir kanala katılmalısınız !')
+  }
+ }
+}
 
-var prefix = işaret.prefix
+module.exports = { 
+kod: "stop",
+async run (client, message, args){
+ if (!message.member.voice.channel) return message.channel.send('sesli kanalda değilsinizki?')
+ if (!message.guild.me.voice.channel) return message.channel.send('ben bir sesli kanalda değilimki')
+ if (message.member.voice.channel.id !== message.guild.me.voice.channel)return message.channel.send('beni herhangi bir ses kanalından ayrıltmak için benimle aynı (ses) odada olmalısın')
+ message.member.voice.channel.leave()
+ message.channel.send('başarıyla ayrıldım')
+  }
+}
+
+ var prefix = işaret.prefix
 
 client.on('ready', () => {
   console.log(`sunucuya girdim ${client.user.tag}!`);
@@ -67,12 +90,6 @@ client.on('message', msg => {
 });
 
 client.on('message', msg => {
-  if (msg.content.toLowerCase() === prefix + 'stop') {
-    msg.reply('komudu ekleyince haber veririm :D');
-  }
-});
-
-client.on('message', msg => {
   if (msg.content.toLowerCase() === prefix + 'sen naber') {
     msg.reply('ben sen');
   }
@@ -108,20 +125,6 @@ client.on('message', message => {
     } else {
       message.reply("Atılacak kişiyi yazmadın");
     }
-  }
-});
-
-client.on('message', message => {
-  if (message.content.toLowerCase() === prefix + 'yardım') {
-    const kanal = new MessageEmbed()
-
-    .setTitle('yardim komutları')
-    .setDescription('--play (url) komuduyla yapıştırdığınız url ye ait ses çalar.')
-    .setAuthor('TheLord')
-    .setColor("RANDOM")
-    .setThumbnail('https://media.discordapp.net/attachments/849278516700774450/850114333458300938/kuroshitsuji.png')
-    .addField(':hearts: -- yazıp herhangi birsohbet başlatırsanız bot size cevap vercektir.');
-    message.channel.send(kanal);
   }
 });
 
@@ -203,20 +206,6 @@ client.on('message', msg => {
   }
 });
 
-client.on('message', async message => {
-  if (message.content.startsWith('--play')) {
-   const args = message.content.split(' ').slice(1)
-   const botmesajı = args.join(" ")
-   if (!botmesajı) return message.reply('Lütfen önce bir URL belirtiniz!')
-   if (message.member.voice.channel) {
-     const connection = await message.member.voice.channel.join();
-     const ytdl = require('ytdl-core');
-     connection.play(ytdl(`${botmesajı}`, { filter: 'audioonly'}) )
-   } else {
-     message.reply('Lütfen önce bir ses kanalına katılınız!');
-   }
-  }
-})
 
 client.on('message', msg => {
   if (msg.content.toLowerCase() === 'amk') {
