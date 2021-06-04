@@ -50,6 +50,17 @@ client.on('message', msg => {
   }
 });
 
+client.on('message', msg => {
+  if (msg.content.toLowerCase() === 'hacklendi') {
+    msg.reply('hacklendi');
+  }
+});
+
+client.on('message', msg => {
+  if (msg.content.toLowerCase() === 'dc hackle') {
+    msg.reply('hackleniyor!');
+  }
+});
 
 client.on('message', msg => {
   if (msg.content.toLowerCase() === prefix + 'malmısın?') {
