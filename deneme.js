@@ -45,6 +45,13 @@ client.on('message', msg => {
 });
 
 client.on('message', msg => {
+  if (msg.content.toLowerCase() === 'selam') {
+    msg.reply('as nabıyon');
+  }
+});
+
+
+client.on('message', msg => {
   if (msg.content.toLowerCase() === prefix + 'malmısın?') {
     msg.reply('sensin mal');
   }
